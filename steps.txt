@@ -1,0 +1,5 @@
+1. created 2 folders for forntend(client) and backend(server)
+--> decided to work on backend first
+2. installed dependencies express mongoose dotenv bcryptjs jsonwebtoken cookie-parser cloudinary socket.io
+3. "type": "module", add this in package.json to use import instead of require
+4. created folders controllers, libs, middlewares, models, routers unders "src" folder in backend.
