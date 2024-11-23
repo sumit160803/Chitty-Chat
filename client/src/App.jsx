@@ -8,19 +8,27 @@ import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import SettingsPage from './pages/SettingsPage'
 import ProfilePage from './pages/ProfilePage'
+
 import { useAuthStore } from './store/useAuthStore.js'
+import { useThemeStore } from './store/useThemeStore.js'
+import { Loader } from 'lucide-react'
 const App = () => {
   const{ authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { theme } = useThemeStore();
   useEffect(() => {
     checkAuth();
   }
   , [checkAuth]);
 
-  if(isCheckingAuth && !authUser) {  //loading animation
-    return( <span className="loading loading-infinity loading-lg"></span>);
-  }
+  //loading animation
+  if (isCheckingAuth && !authUser)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-20 animate-spin" />
+      </div>
+    );
   return (
-    <div>
+    <div data-theme={theme}>
       <Navbar />
 
       <Routes>
