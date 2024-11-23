@@ -1,6 +1,7 @@
 import { generateToken } from '../libs/utils.js';
 import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
+import cloudinary from '../libs/cloudinary.js';
 
 export const signup = async (req,res) =>{
     const {fullName,email,password} = req.body;
@@ -91,6 +92,9 @@ export const updateProfile = async (req,res) =>{
     }
     catch (error) {
         console.log("Error in updateProfile controller ", error.message);
+        if( error.http_code === 413 || error.message.includes("file is too large")){
+            return res.status(400).json({msg:"Image size is too large"});
+        }
         res.status(500).json({msg:"Internal server error"});
     }
 
