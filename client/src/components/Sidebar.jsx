@@ -17,10 +17,6 @@ const Sidebar = () => {
   if(isUsersLoading) return <SidebarSkeleton/>;
 
   // Check if users is an array before calling .map
-  if (!Array.isArray(users)) {
-    console.error('Expected users to be an array, but got:', users);
-    return <div>Error loading users</div>;
-  }
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">

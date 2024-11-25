@@ -9,7 +9,7 @@ export const getUsersForSidebar = async(req,res)=> {
     } 
     catch (error) {
         console.log("Error in getUsersForSidebar: ",error);
-        return res.status(500).json({message:"Internal Server Error"});
+        return res.status(500).json({msg:"Internal Server Error"});
     }
 };
 
@@ -28,7 +28,7 @@ export const getMessages = async(req,res) => {
     } 
     catch (error) {
         console.log("Error in getMessages: ",error);
-        return res.status(500).json({message:"Internal Server Error"});
+        return res.status(500).json({msg:"Internal Server Error"});
     }
 };
 
@@ -60,6 +60,6 @@ export const sendMessage = async(req,res) => {
     }
     catch(error){
         console.log("Error in sendMessage: ",error);    
-        return res.status(500).json({message:"Internal Server Error"});
+        return res.status(500).json({msg:"Internal Server Error"});
     }
 };
