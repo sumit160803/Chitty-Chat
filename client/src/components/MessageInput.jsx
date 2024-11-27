@@ -1,16 +1,46 @@
-import React, { useRef, useState } from 'react'
-import { useChatStore } from '../store/useChatStore';
+import React, { useRef, useState } from "react";
+import { useChatStore } from "../store/useChatStore";
 import { Image, Send, X } from "lucide-react";
 
 const MessageInput = () => {
-  const [text,setText] = useState('');
-  const [imagePreview,setImagePreview] = useState(''); 
-  const fileInputRef = useRef();
-  const {sendMessage} = useChatStore();
-  
-  const handleImageChange = (e) => {};
-  const handleSendMessage = (e) => {};
-  const removeImage = () => {};
+  const [text, setText] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
+  const fileInputRef = useRef(null);
+  const { sendMessage } = useChatStore();
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setImagePreview(null);
+    if(fileInputRef.current){
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if(!text.trim() && !imagePreview) return; //dont do anything
+    try{
+      sendMessage({
+        text: text.trim(),
+        media: imagePreview,
+      });
+      //clear form
+      setText("");
+      removeImage();
+    } catch(err) {
+      console.log("Some error occured: ", err);
+    }
+  };
+
   return (
     <div className="p-4 w-full">
       {imagePreview && (
@@ -52,8 +82,7 @@ const MessageInput = () => {
 
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`hidden sm:flex btn btn-circle ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
             onClick={() => fileInputRef.current?.click()}
           >
             <Image size={20} />
@@ -69,6 +98,6 @@ const MessageInput = () => {
       </form>
     </div>
   );
-}
+};
 
-export default MessageInput
+export default MessageInput;
