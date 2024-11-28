@@ -13,13 +13,14 @@ import { useAuthStore } from './store/useAuthStore.js'
 import { useThemeStore } from './store/useThemeStore.js'
 import { Loader } from 'lucide-react'
 const App = () => {
-  const{ authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const{ authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
   const { theme } = useThemeStore();
   useEffect(() => {
     checkAuth();
   }
   , [checkAuth]);
 
+  // console.log(onlineUsers);
   //loading animation
   if (isCheckingAuth && !authUser)
     return (
