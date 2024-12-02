@@ -108,3 +108,17 @@ export const checkAuth = (req,res) =>{
         res.status(500).json({msg:"Internal server error"});
     }
 };
+export const deleteAuth = async (req,res) => {
+    const userId = req.user._id;
+    if(!userId){
+        return res.status(400).json({msg:"User not found"});
+    }
+    try {
+        await User.findByIdAndDelete(userId);
+        res.cookie('jwt','',{maxAge:0});
+        return res.status(200).json({msg:"Account deleted successfully"});  
+    } catch (error) {
+        console.log("Error in deleteAuth controller ", error.message);
+        res.status(500).json({msg:"Internal server error"});
+    }
+};

@@ -90,6 +90,18 @@ export const useAuthStore = create((set,get) => ({
         }
     },
 
+    deletePerm: async (tid) => {
+        try {
+            toast.dismiss(tid);
+            await axiosInstance.delete('/auth/delete');
+            set({authUser: null});
+            toast.success("Account deleted successfully");
+            get().socketDisconnect();
+        } catch(error) {
+            toast.error("Something went wrong");
+        }
+    },
+
     updateProfile: async (data) => {
         set({isUpdatingProfile: true});
         try {
